@@ -1,4 +1,4 @@
-package com.sevenoeight.transit.domain.TripV1;
+package com.sevenoeight.transit.domain;
 
 import javax.xml.bind.annotation.XmlElement;
 import java.util.List;
@@ -6,16 +6,16 @@ import java.util.List;
 /**
  * @author <a href="mailto:mark.cafaro@gmail.com">Mark Cafaro</a>
  */
-public class TripV1 {
+public class Trip {
 
-    private List<ItineraryV1> itineraries;
+    private List<Itinerary> itineraries;
 
     @XmlElement
-    public List<ItineraryV1> getItineraries() {
+    public List<Itinerary> getItineraries() {
         return itineraries;
     }
 
-    public void setItineraries(List<ItineraryV1> itineraries) {
+    public void setItineraries(List<Itinerary> itineraries) {
         this.itineraries = itineraries;
     }
 }

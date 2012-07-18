@@ -1,16 +1,12 @@
-
 package com.sevenoeight.transit.services;
 
-import com.sevenoeight.transit.domain.TripV1.ItineraryV1;
-import com.sevenoeight.transit.domain.TripV1.LegV1;
-import com.sevenoeight.transit.domain.TripV1.TransitLegV1;
-import com.sevenoeight.transit.domain.TripV1.TripV1;
+import com.sevenoeight.transit.domain.Trip;
 
 import javax.ws.rs.*;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import java.io.InputStream;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 /**
  * @author <a href="mailto:mark.cafaro@gmail.com">Mark Cafaro</a>
@@ -19,70 +15,36 @@ import java.util.List;
 public class TripResource {
 
     @GET
-    @Produces("application/json")
-    public TripV1 getTrip(@QueryParam("orig") String origin,
-                          @QueryParam("dest") String destination,
-                          @QueryParam("date") Date travelDate,
-                          @DefaultValue("false") @QueryParam("arriveBy") Boolean shouldArriveBy,
-                          @DefaultValue("best") @QueryParam("routing") String routingPreference,
-                          @DefaultValue("false") @QueryParam("access") Boolean isAccessibleTrip,
-                          @DefaultValue("805") @QueryParam("maxWalk") int maxWalkingDistance,
-                          @QueryParam("version") Integer version) {
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getTripResponse(@QueryParam(RequestUri.API_ORIGIN) String origin,
+                                    @QueryParam(RequestUri.API_DESTINATION) String destination,
+                                    @QueryParam(RequestUri.API_TRAVEL_DATE) Date travelDate,
+                                    @DefaultValue("false") @QueryParam(RequestUri.API_SHOULD_ARRIVE_BY) Boolean shouldArriveBy,
+                                    @DefaultValue(RequestUri.API_BEST_ROUTE) @QueryParam(RequestUri.API_ROUTING_PREFERENCE) String routingPreference,
+                                    @DefaultValue("false") @QueryParam(RequestUri.API_REQUIRES_ACCESSIBLE_TRIP) Boolean isAccessibleTrip,
+                                    @DefaultValue("805") @QueryParam(RequestUri.API_MAX_WALKING_DISTANCE) int maxWalkingDistance) {
 
-        if (version == null) {
-            version = ApiVersionResource.CURRENT_API_VERSION;
-        }
-
-        if (travelDate == null) {
-            travelDate = new Date();
-        }
-
-        switch (version) {
-            case 1:
-
-                break;
-            default:
-
-                break;
-        }
-
-//        return "origin: " + origin + "\n" +
-//                "destination: " + destination + "\n" +
-//                "travelDate: " + travelDate + "\n" +
-//                "routingPreference: " + routingPreference + "\n" +
-//                "shouldArriveBy: " + shouldArriveBy + "\n" +
-//                "isAccessibleTrip: " + isAccessibleTrip + "\n" +
-//                "maxWalkingDistance: " + maxWalkingDistance + "\n" +
-//                "version: " + version + "\n";
-
-        TransitLegV1 leg = new TransitLegV1();
-        leg.setStartTime(new Date());
-
-        List<LegV1> legs = new ArrayList<LegV1>();
-        legs.add(leg);
-
-        ItineraryV1 itinerary = new ItineraryV1();
-        itinerary.setLegs(legs);
-
-        List<ItineraryV1> itineraries = new ArrayList<ItineraryV1>();
-        itineraries.add(itinerary);
-
-        TripV1 trip = new TripV1();
-        trip.setItineraries(itineraries);
-
-        return trip;
+        Trip trip = getTrip(origin, destination, travelDate, shouldArriveBy, routingPreference, isAccessibleTrip, maxWalkingDistance);
+        return Response.ok().entity(trip).build();
     }
 
     @POST
-    @Consumes("application/x-www-form-urlencoded")
-    @Produces("text/plain")
-    public String createTrip(InputStream inputStream,
-                             @FormParam("version") Integer version) {
+    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response createTripResponse(InputStream inputStream) {
 
-        if (version == null) {
-            version = ApiVersionResource.CURRENT_API_VERSION;
-        }
-
-        return "version: " + version;
+        return null;
     }
+
+    public Trip getTrip(String origin,
+                        String destination,
+                        Date travelDate,
+                        Boolean shouldArriveBy,
+                        String routingPreference,
+                        Boolean isAccessibleTrip,
+                        int maxWalkingDistance) {
+
+        return null;
+    }
+
 }

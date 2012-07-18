@@ -1,4 +1,4 @@
-package com.sevenoeight.transit.domain.TripV1;
+package com.sevenoeight.transit.domain;
 
 import javax.xml.bind.annotation.XmlElement;
 import java.util.Date;
@@ -6,7 +6,7 @@ import java.util.Date;
 /**
  * @author <a href="mailto:mark.cafaro@gmail.com">Mark Cafaro</a>
  */
-public class LegV1 {
+public class Leg {
 
     private Date startTime;
 
